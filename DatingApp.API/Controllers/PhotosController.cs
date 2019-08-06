@@ -98,31 +98,31 @@ namespace DatingApp.API.Controllers
         }
 
         [HttpPost("{id}/setMain")]
-        // public async Task<IActionResult> SetMainPhoto(int userId, int id)
-        // {
-        //     if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-        //         return Unauthorized();
+        public async Task<IActionResult> SetMainPhoto(int userId, int id)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
 
-        //     var user = await _repo.GetUser(userId);
+            var user = await _repo.GetUser(userId);                 // gets user
 
-        //     if (!user.Photos.Any(p => p.Id == id))
-        //         return Unauthorized();
+            if (!user.Photos.Any(p => p.Id == id))                  // checks that the photo exists in user collection
+                return Unauthorized();                  
 
-        //     var photoFromRepo = await _repo.GetPhoto(id);
+            var photoFromRepo = await _repo.GetPhoto(id);           // gets the photo
 
-        //     if (photoFromRepo.IsMain)
-        //         return BadRequest("This is already the main photo");
+            if (photoFromRepo.IsMain)                               // check it is not already main
+                return BadRequest("This is already the main photo");
 
-        //     var currentMainPhoto = await _repo.GetMainPhotoForUser(userId);
-        //     currentMainPhoto.IsMain = false;
+            var currentMainPhoto = await _repo.GetMainPhotoForUser(userId); // gets current main and sets to false
+            currentMainPhoto.IsMain = false;                                //
 
-        //     photoFromRepo.IsMain = true;
+            photoFromRepo.IsMain = true;
 
-        //     if (await _repo.SaveAll())
-        //         return NoContent();
+            if (await _repo.SaveAll())
+                return NoContent();
 
-        //     return BadRequest("Could not set photo to main");
-        // }
+            return BadRequest("Could not set photo to main");
+        }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePhoto(int userId, int id)
