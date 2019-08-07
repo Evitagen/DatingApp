@@ -42,6 +42,11 @@ namespace DatingApp.API.Data
             return user;
         }
 
+        public Task GetUser(object userid)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async Task<IEnumerable<user>> GetUsers()
         {
             var users = await _context.Users.Include(p => p.Photos).ToListAsync();
