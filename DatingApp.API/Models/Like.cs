@@ -4,7 +4,7 @@ namespace DatingApp.API.Models
     {
         public int LikerId { get; set; }
         public int LikeeId { get; set; }
-        public user Liker { get; set; }
-        public user Likee { get; set; }
+        public virtual user Liker { get; set; }
+        public virtual user Likee { get; set; }
     }
 }
