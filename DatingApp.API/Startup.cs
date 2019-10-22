@@ -122,23 +122,24 @@ namespace DatingApp.API
             }
             else
             {
-                app.UseExceptionHandler(builder => {                                                    //
-                    builder.Run(async context => {                                                      //  This is instead of try catch block for catching exceptions 
-                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;          //  globally
-                                                                                                        //
-                        var error = context.Features.Get<IExceptionHandlerFeature>();                   //
-                        if (error != null)                                                              //
-                        {                                                                               //
-                            context.Response.AddApplicationError(error.Error.Message);                  //
-                            await context.Response.WriteAsync(error.Error.Message);                     //
-                        }                                                                               //
-                    });                                                                                 //
-                });                                                                                     //
+                // app.UseExceptionHandler(builder => {                                                    //
+                //     builder.Run(async context => {                                                      //  This is instead of try catch block for catching exceptions 
+                //         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;          //  globally
+                //                                                                                         //
+                //         var error = context.Features.Get<IExceptionHandlerFeature>();                   //
+                //         if (error != null)                                                              //
+                //         {                                                                               //
+                //             context.Response.AddApplicationError(error.Error.Message);                  //
+                //             await context.Response.WriteAsync(error.Error.Message);                     //
+                //         }                                                                               //
+                //     });                                                                                 //
+                // });                                                                                     //
 
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                  app.UseHsts();
             }
           
+            app.UseDeveloperExceptionPage();
             app.UseHttpsRedirection();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthentication();
